@@ -4,8 +4,6 @@
    Code repository: https://github.com/BlueLamantine/a-tiny-JS-world
    Web app: https://bluelamantine.github.io//a-tiny-JS-world/
    */
-
-// ======== OBJECTS DEFINITIONS ========
 const man = {
    species: 'Human',
    name: 'Parker',
@@ -52,7 +50,7 @@ const catWoman = {
    friends: 'No friends'
 };
 const jsWorld = [man,woman,dog,cat,catWoman];
-// ======== OUTPUT ========
+
 jsWorld.forEach( el => {
    print(Object.values(el).join(';'));
 });
