@@ -4,7 +4,57 @@
    Code repository: https://github.com/BlueLamantine/a-tiny-JS-world
    Web app: https://bluelamantine.github.io//a-tiny-JS-world/
    */
-const man = {
+
+class Pets {
+
+   constructor (props){
+       this.species = props.species;
+       this.name = props.name;
+       this.gender = props.gender;
+       this.paws = 4;
+       this.friends =  Array.isArray(props.friends) ? props.friends : 'no friends';    
+   }
+
+   toSting () {
+      return `This ${this.species} is a ${this.gender}, its name is ${this.name}. The ${this.species} has ${this.paws} paws. Makes a sound \'${this.saund}\'. Social with : ${this.friends}`
+   }
+}
+class Cat extends Pets {
+
+   static feed = {
+       full : 'Purrrr Purrr',
+       normal : 'Mur',
+       hungry : 'Meoooow Meoooow'
+   }
+
+   constructor (props){
+       super(props);
+       this.saund = Cat.feed[props.type];
+   }
+
+}
+class Dog extends Pets {
+
+   static mood = {
+       happy : 'Ayy-woof',
+       outdoor : 'Woof woof',
+       angry : 'Grrrrrr Grrrrrr'
+   }
+
+   constructor (props){
+       super(props);
+       this.saund = Dog.mood[props.type];
+   }
+}
+
+const kitty = new Cat({ species : 'cat', name : 'Garfield', gender : 'male', type : 'full', friends : ['Dog', 'Dog2']});
+const doggie = new Dog({ species : 'dog', name : 'Hachiko', gender : 'male', type: 'outdoor'});
+
+const jsWorld = [kitty.toSting(),doggie.toSting()];
+jsWorld.forEach( el => {
+   print(el, 'p');
+});
+/*const man = {
    species: 'Human',
    name: 'Parker',
    gender: 'male',
@@ -53,4 +103,4 @@ const jsWorld = [man,woman,dog,cat,catWoman];
 
 jsWorld.forEach( el => {
    print(Object.values(el).join(';'));
-});
+});*/
