@@ -5,39 +5,45 @@
    Web app: https://bluelamantine.github.io//a-tiny-JS-world/
    */
 class General {
-  constructor({ name, gender, friends }) {
+  constructor({ name, gender, friends, species }) {
     this.name = name;
     this.gender = gender;
+    this.species = species;
     this.friends = Array.isArray(friends) ? friends : 'no friends';
   }
-}
-
-class Human extends General {
-  constructor({ name, gender, friends, voise }) {
-    super({ name, gender, friends });
-    this.voise = voise;
-    this.species = 'human';
-    this.legs = 2;
-    this.hands = 2;
-  }
-
   getGender() {
     return {
       male: ['He', 'his'],
       female: ['She', 'her'],
     };
   }
-
   getInfo() {
     return (
       `This ${this.species} is a ${this.gender}, ` +
-      `${this.getGender()[this.gender][1]} name is ${this.name}. ` +
-      `${this.getGender()[this.gender][0]} has ${this.legs} legs and ${
+      `${this.getGender()[this.gender][1]} name is ${this.name}. `
+    );
+  }
+  getFriendsList() {
+    return `Friend with: ${this.friends}`;
+  }
+}
+
+class Human extends General {
+  constructor({ name, gender, friends, voise }) {
+    super({ name, gender, friends, species: 'human' });
+    this.voise = voise;
+    this.legs = 2;
+    this.hands = 2;
+  }
+
+  getInfo() {
+    return (
+      super.getInfo() +
+      ` ${super.getGender()[this.gender][0]} has ${this.legs} legs and ${
         this.hands
-      } hands. ` +
-      `${this.getGender()[this.gender][0]} says \'${
-        this.voise
-      }\'. Friend with : ${this.friends}`
+      } hands.` +
+      ` ${super.getGender()[this.gender][0]} says \'${this.voise}\'. ` +
+      super.getFriendsList()
     );
   }
 }
@@ -60,32 +66,37 @@ class Woman extends Human {
 }
 
 class Pet extends General {
-  constructor({ name, gender, friends, species }) {
-    super({ name, gender, friends });
-    this.species = species;
+  constructor({ name, gender, friends, species, sound }) {
+    super({ name, gender, friends, species });
+    this.sound = sound;
     this.paws = 4;
   }
 
   getInfo() {
     return (
-      `This ${this.species} is a ${this.gender}, its name is ${this.name}. ` +
-      `The ${this.species} has ${this.paws} paws. Makes a sound \'${this.sound}\'. ` +
-      `Social with : ${this.friends}`
+      super.getInfo() +
+      `The ${this.species} has ${this.paws} paws.` +
+      ` Makes a sound \'${this.sound}\'. ` +
+      super.getFriendsList()
     );
   }
 }
 
 class Cat extends Pet {
   constructor({ name, gender, friends }) {
-    super({ name, gender, friends, species: 'cat' });
-    this.sound = 'Meow Purrrr Purrr';
+    super({
+      name,
+      gender,
+      friends,
+      species: 'cat',
+      sound: 'Meow Purrrr Purrr',
+    });
   }
 }
 
 class Dog extends Pet {
   constructor({ name, gender, friends }) {
-    super({ name, gender, friends, species: 'dog' });
-    this.sound = 'Woof woof';
+    super({ name, gender, friends, species: 'dog', sound: 'Woof woof' });
   }
 }
 
@@ -95,8 +106,8 @@ class CatWoman extends Woman {
     Object.assign(
       this,
       new Cat({
-        name: 'Mary',
-        gender: 'female',
+        name: this.name,
+        gender: this.gender,
         friends: this.friends,
       })
     );
@@ -110,7 +121,7 @@ const woman = new Woman({ name: 'Eva', friends: ['Garfield', 'Jack'] });
 const cat = new Cat({ name: 'Garfield', gender: 'male' });
 
 const catWoman = new CatWoman({ name: 'Mary', friends: ['Eva', 'Garfield'] });
-console.log(catWoman);
+
 const dog = new Dog({
   name: 'Hachiko',
   gender: 'male',
